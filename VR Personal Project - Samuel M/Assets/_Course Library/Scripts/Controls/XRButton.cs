@@ -13,6 +13,9 @@ public class XRButton : XRBaseInteractable
     [Tooltip("The distance the button can be pressed")]
     public float pressDistance = 0.1f;
 
+    [Tooltip("Canvas GameObject to show when the button is released")]
+    public GameObject canvasToShow = null;
+
     // When the button is pressed
     public UnityEvent OnPress = new UnityEvent();
 
@@ -55,6 +58,12 @@ public class XRButton : XRBaseInteractable
         hoverHeight = 0.0f;
         startHeight = 0.0f;
         ApplyHeight(yMax);
+
+        // Show the canvas when the button is released
+        if (canvasToShow != null)
+        {
+            canvasToShow.SetActive(true);
+        }
     }
 
     private void Start()
@@ -70,7 +79,7 @@ public class XRButton : XRBaseInteractable
 
     public override void ProcessInteractable(XRInteractionUpdateOrder.UpdatePhase updatePhase)
     {
-        if(updatePhase == XRInteractionUpdateOrder.UpdatePhase.Dynamic)
+        if (updatePhase == XRInteractionUpdateOrder.UpdatePhase.Dynamic)
         {
             if (isHovered)
             {
@@ -110,11 +119,11 @@ public class XRButton : XRBaseInteractable
     {
         bool inPosition = InPosition();
 
-        if(inPosition != previousPress)
+        if (inPosition != previousPress)
         {
             previousPress = inPosition;
 
-            if(inPosition)
+            if (inPosition)
             {
                 OnPress.Invoke();
             }
