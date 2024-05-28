@@ -5,6 +5,10 @@ TagManager:
   serializedVersion: 2
   tags:
   - Ground
+  - Box
+  - Trail
+  - Spike
+  - Floor
   layers:
   - Default
   - TransparentFX
