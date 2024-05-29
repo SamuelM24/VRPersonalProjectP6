@@ -27,6 +27,7 @@ public class ResetObstacles : MonoBehaviour
             }
 
             other.gameObject.transform.position = new Vector3(15, 3, -40);
+            other.gameObject.transform.rotation = Quaternion.Euler(Vector3.zero);
         }
     }
 }

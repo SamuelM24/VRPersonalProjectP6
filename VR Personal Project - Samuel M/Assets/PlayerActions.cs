@@ -19,11 +19,16 @@ public class PlayerActions : MonoBehaviour
     {
         if (!grounded && transform.rotation.y == 180f)
         {
-            rb.AddRelativeForce(Vector3.up * 9.81f * gravityScale);
+            rb.AddRelativeForce(-Physics.gravity * (gravityScale + 1));
         }
         else if (!grounded && transform.rotation.y == 0f)
         {
-            rb.AddRelativeForce(Vector3.down * 9.81f * gravityScale);
+            rb.AddRelativeForce(-Physics.gravity * (1-gravityScale));
+        }
+
+        if (grounded && transform.rotation.y == 180f)
+        {
+            rb.AddRelativeForce(-Physics.gravity);
         }
         Flip();
     }
@@ -43,6 +48,15 @@ public class PlayerActions : MonoBehaviour
         if (collision.gameObject.CompareTag("Floor"))
         {
             grounded = true;
+        }
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        Debug.Log(collision.gameObject.tag);
+        if (collision.gameObject.CompareTag("Floor"))
+        {
+            grounded = false;
         }
     }
 }
