@@ -5,11 +5,10 @@ using UnityEngine;
 public class ObstaclesMove : MonoBehaviour
 {
     public float speed;
-    Rigidbody rb;
     // Start is called before the first frame update
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
+
     }
 
     // Update is called once per frame

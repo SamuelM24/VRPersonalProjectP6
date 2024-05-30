@@ -1,15 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Net.NetworkInformation;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class PlayerActions : MonoBehaviour
 {
     public bool grounded;
     public float gravityScale;
     public float jumpForce;
+    public float bufferTimeInit;
+    float bufferTime = 0f;
     Rigidbody rb;
-    // Start is called before the first frame update
-    void Start()
+
+    private void Awake()
     {
         rb = GetComponent<Rigidbody>();
     }
@@ -17,20 +21,29 @@ public class PlayerActions : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!grounded && transform.rotation.y == 180f)
+        bufferTime -= Time.deltaTime;
+        if (transform.rotation.y == 180f)
         {
             rb.AddRelativeForce(-Physics.gravity * (gravityScale + 1));
         }
-        else if (!grounded && transform.rotation.y == 0f)
+        else if (transform.rotation.y == 0f)
         {
             rb.AddRelativeForce(-Physics.gravity * (1-gravityScale));
+        }   
+        if (bufferTime > 0f)
+        {
+            Flip();
         }
 
-        if (grounded && transform.rotation.y == 180f)
+        if (grounded)
         {
-            rb.AddRelativeForce(-Physics.gravity);
+            Debug.Log("I'm grounded");
         }
-        Flip();
+    }
+
+    public void SetBuffer()
+    {
+        bufferTime = bufferTimeInit;
     }
 
     public void Flip()
@@ -48,6 +61,7 @@ public class PlayerActions : MonoBehaviour
         if (collision.gameObject.CompareTag("Floor"))
         {
             grounded = true;
+            bufferTime = 0;
         }
     }
 
