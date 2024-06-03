@@ -7,6 +7,7 @@ using UnityEngine.Rendering;
 public class PlayerActions : MonoBehaviour
 {
     public bool grounded;
+    public bool flipping;
     public float gravityScale;
     public float jumpForce;
     public float bufferTimeInit;
@@ -51,6 +52,7 @@ public class PlayerActions : MonoBehaviour
         if (grounded)
         {
             grounded = false;
+            flipping = true;
             transform.Rotate(Vector3.forward * 180f);
         }
     }
@@ -61,7 +63,12 @@ public class PlayerActions : MonoBehaviour
         if (collision.gameObject.CompareTag("Floor"))
         {
             grounded = true;
-            bufferTime = 0;
+            if (flipping)
+            {
+                bufferTime = 0;
+                flipping = false;
+            }
+            
         }
     }
 
