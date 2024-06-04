@@ -9,6 +9,7 @@ TagManager:
   - Trail
   - Spike
   - Floor
+  - Pour
   layers:
   - Default
   - TransparentFX
